@@ -40,6 +40,9 @@ namespace Order_Management.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("integer");
 
+                    b.Property<int>("discountedPrice")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.ToTable("Products");
