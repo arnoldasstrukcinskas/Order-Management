@@ -1,0 +1,37 @@
+services:
+  ordermanagement:
+    image: ${DOCKER_REGISTRY-}ordermanagement
+    container_name: ordermanagement.api
+    build:
+      context: .
+      dockerfile: Order Management/Dockerfile
+    ports:
+        - "5000:5000"
+        - "5001:5001"
+        
+  ordermanagement.database:
+    image: postgres:latest
+    container_name: ordermanagement.database
+    environment:
+        - POSTGRES_DB=orderManagement
+        - POSTGRES_USER=arnoldas
+        - POSTGRES_PASSWORD=admin
+    volumes:
+        - ./.containers/products-db:/var/lib/postgresql/data
+    ports:
+        - 5432:5432
+        
+  ordermanagement.pgadmin:
+     image: elestio/pgadmin:latest
+     container_name: ordermanagement.pgadmin
+     environment:
+       - PGADMIN_DEFAULT_EMAIL=arniox1234@gmail.com
+       - PGADMIN_DEFAULT_PASSWORD=arnoldas
+     ports:
+        - 5050:80
+     depends_on:
+        - ordermanagement.database
+        
+
+       
+  
