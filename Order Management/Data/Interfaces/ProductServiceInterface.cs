@@ -9,6 +9,5 @@ namespace Order_Management.Data
         Task<Product> DeleteProducts(Product product);
         Task<Product> GetProductByName(string productName);
         Task<List<Product>> GetProductsByName(string productsName);
-        Task<Product> AddDiscount(Product product);
     }
 }

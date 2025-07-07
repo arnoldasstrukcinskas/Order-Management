@@ -41,17 +41,6 @@ namespace Order_Management.Services
         {
             return _context.Products.Where(p => p.Name.Contains(productsName)).ToListAsync();
         }
-
-        //public Task<List<Product>> GetProductsByName(string productsName)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        public Task<Product> AddDiscount(Product product)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 
 
