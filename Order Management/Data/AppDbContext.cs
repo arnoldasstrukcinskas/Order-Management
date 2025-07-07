@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Order_Management.Data.Entity;
 
 namespace Order_Management.Data
 {

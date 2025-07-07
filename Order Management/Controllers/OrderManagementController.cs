@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Order_Management.Data;
+using Order_Management.Data.Entity;
 using Order_Management.Services;
 
 namespace Order_Management.Controllers
@@ -9,9 +9,9 @@ namespace Order_Management.Controllers
     [Route("[controller]")]
     public class OrderManagementController : ControllerBase
     {
-        private OrderManagerServices _productService;
+        private ProductServices _productService;
 
-        public OrderManagementController(OrderManagerServices productService)
+        public OrderManagementController(ProductServices productService)
         {
             _productService = productService;
         }
@@ -20,7 +20,7 @@ namespace Order_Management.Controllers
         /// Adds product to postgreSql database.
         /// </summary>
         /// <returns>Added product object with ID, name, description, and price.</returns>
-        [HttpPost(Name = "addProduct")]
+        [HttpPost("add", Name = "addProduct")]
         public async Task<IActionResult> AddProduct(Product newProduct)
         {
             var productAddTask = await _productService.CreateProduct(newProduct);
@@ -40,7 +40,7 @@ namespace Order_Management.Controllers
         /// </summary>
         /// <param name="Enter product name">The name of the product to retrieve.</param>
         /// <returns>A product object with ID, name, description, and price.</returns>
-        [HttpGet(Name = "getProductById")]
+        [HttpGet("single", Name = "getProductByName")]
         public async Task<IActionResult> GetProductByName(string productName)
         {
             var foundProduct = await _productService.GetProductByName(productName);
@@ -52,6 +52,48 @@ namespace Order_Management.Controllers
             else {
                 return BadRequest("Product not found!");
             }
+        }
+
+        /// <summary>
+        /// Retrieves a products by their name from the order management system.
+        /// </summary>
+        /// <param name="Enter products name">The name of the products to retrieve.</param>
+        /// <returns>A product objects with IDs, names, descriptions, and prices.</returns>
+        [HttpGet("multiple", Name = "getProductsByName")]
+        public async Task<IActionResult> GetProductsByName(string productName)
+        {
+            var foundProducts = await _productService.GetProductsByName(productName);
+
+            if (foundProducts.Any())
+            {
+                return Ok(foundProducts);
+            }
+            else
+            {
+                return BadRequest("Products not found!");
+            }
+        }
+
+        /// <summary>
+        /// Finds a product by name and deletes it.
+        /// </summary>
+        /// <param name="Enter product name">The name of the product to delete.</param>
+        /// <returns>A deleted product object with ID, name, description, and price.</returns>
+        [HttpDelete("delete", Name = "deleteProductByName")]
+        public async Task<IActionResult> DeleteProductByName(string productName)
+        {
+            var foundProduct = await _productService.GetProductByName(productName);
+
+            if (foundProduct != null)
+            {
+                _productService.DeleteProducts(foundProduct);
+                return Ok(foundProduct);
+            }
+            else
+            {
+                return BadRequest("Product not found!");
+            }
+        }
         }
     }
 }

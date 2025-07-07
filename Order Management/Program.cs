@@ -28,7 +28,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddDbContext<AppDbContext>(
     options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<OrderManagerServices>();
+builder.Services.AddScoped<ProductServices>();
 
 var app = builder.Build();
 
