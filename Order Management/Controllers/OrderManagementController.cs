@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Order_Management.Data.Entity;
+using Order_Management.Data.Entity.DTO;
 using Order_Management.Services;
 
 namespace Order_Management.Controllers
@@ -19,9 +20,9 @@ namespace Order_Management.Controllers
         /// </summary>
         /// <returns>Added order object with ID, percentage and minimum quantity.</returns>
         [HttpPost]
-        public async Task<IActionResult> AddOrder(Order newOrder)
+        public async Task<IActionResult> AddOrder(OrderDTO newOrderDTO)
         {
-            var orderAdd = await _orderService.CreateOrder(newOrder);
+            var orderAdd = await _orderService.CreateOrder(newOrderDTO);
 
             if (orderAdd != null)
             {
@@ -30,6 +31,27 @@ namespace Order_Management.Controllers
             else
             {
                 return BadRequest("Failed to add order");
+            }
+        }
+
+        /// <summary>
+        /// Finds an order by id and deletes it.
+        /// </summary>
+        /// <param id="Enter order id">The id of the order to delete.</param>
+        /// <returns>A deleted order object with ID, date, total amount and deleted items.</returns>
+        [HttpDelete]
+        public async Task<IActionResult> DeleteProductByName(int id)
+        {
+            var foundOrder = await _orderService.GetOrderById(id);
+
+            if (foundOrder != null)
+            {
+                _orderService.DeleteOrder(foundOrder);
+                return Ok(foundOrder);
+            }
+            else
+            {
+                return BadRequest("Order not found!");
             }
         }
 

@@ -34,6 +34,11 @@ namespace Order_Management.Services
             return _context.Discounts.FirstOrDefaultAsync(x => x.Name == discountName);
         }
 
+        public Task<Discount> GetDiscountByQuantity(int quantity)
+        {
+            return _context.Discounts.FirstOrDefaultAsync(x => x.MinimumQuantity == quantity);
+        }
+
         public async Task<Discount> UpdateDiscount(string discountName, Discount updatedDiscount)
         {
             var discountForUpdate = await GetDiscountByName(discountName);

@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Order_Management.Migrations
 {
     /// <inheritdoc />
-    public partial class AddAdditionalEntities : Migration
+    public partial class AddAditionalEntities : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -58,8 +58,8 @@ namespace Order_Management.Migrations
                     ProductId = table.Column<int>(type: "integer", nullable: false),
                     DiscountId = table.Column<int>(type: "integer", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
-                    UnitPrice = table.Column<decimal>(type: "numeric", nullable: false),
-                    TotalPrice = table.Column<decimal>(type: "numeric", nullable: false)
+                    UnitPrice = table.Column<double>(type: "double precision", nullable: false),
+                    TotalPrice = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {

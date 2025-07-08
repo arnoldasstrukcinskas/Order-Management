@@ -8,5 +8,7 @@ namespace Order_Management.Data.Interfaces
         Task<Discount> UpdateDiscount(string discountName, Discount updatedDiscount);
         Task<Discount> DeleteDiscount(Discount discount);
         Task<Discount> GetDiscountByName(string productName);
+
+        Task<Discount> GetDiscountByQuantity(int quantity);
     }
 }
