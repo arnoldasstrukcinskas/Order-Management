@@ -4,7 +4,7 @@
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Installation](#installation)
-- [Launching](#launcing)
+- [Launching](#launching)
 ## About
 This API is created for handling and processing customers orders, stores information about orders in the database. Additionaly in the system can generate discounts and apply a discount according to it's rules.
 Additionally API can generate report of all or specified products.
@@ -65,7 +65,7 @@ For project to launch firstly need to download project or clone it from reposito
 - Go to this repository: https://github.com/arnoldasstrukcinskas/Order-Management
 - Then press green button Code and and Download Zip.
 - Unpack zip file
-- Move to [Launching](#launcing)
+- Move to [Launching](#launching)
 #### 2. Clone(If you have git)
 - Open Terminal and go to directory you want to clone project(add your own directory)
   ```bash
@@ -75,7 +75,7 @@ For project to launch firstly need to download project or clone it from reposito
   ```bash
   git clone https://github.com/arnoldasstrukcinskas/Order-Management.git
   ```
-- Move to [Launching](#launcing)
+- Move to [Launching](#launching)
 ## Launching
 #### 1. Go to project directory(this is example directory)
 ```bash
