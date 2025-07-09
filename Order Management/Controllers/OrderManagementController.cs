@@ -105,9 +105,13 @@ namespace Order_Management.Controllers
         {
             var report = await _orderService.GetReportByName(productName);
        
-            if (report != null)
+            if (report != null && report.Count > 0)
             {
                 return Ok(report);
+            }
+            else if(report.Count == 0)
+            {
+                return BadRequest("Could not generate a report, something wrong!");
             }
             else
             {
@@ -125,13 +129,18 @@ namespace Order_Management.Controllers
         {
             var reports = await _orderService.GetFullReportList();
 
-            if (reports != null)
+            if (reports != null && reports.Count > 0)
             {
                 return Ok(reports);
             }
+            else if(reports.Count == 0)
+            {
+                return BadRequest("Could not generate a report, something wrong!");
+            } 
             else
             {
                 return BadRequest("Could not generate a report, something wrong!");
+
             }
         }
 
