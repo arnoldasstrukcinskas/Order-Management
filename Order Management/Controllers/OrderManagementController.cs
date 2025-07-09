@@ -95,5 +95,45 @@ namespace Order_Management.Controllers
             }
         }
 
+        /// <summary>
+        /// Retrieves a report of discounted products from postgresql database.
+        /// </summary>
+        /// <param>Name of discounted product</param>
+        /// <returns>Report with the products which was sold with specific discount and their parameters</returns>
+        [HttpGet("report")]
+        public async Task<IActionResult> GetDiscountReport(string productName)
+        {
+            var report = await _orderService.GetReportByName(productName);
+       
+            if (report != null)
+            {
+                return Ok(report);
+            }
+            else
+            {
+                return BadRequest("Could not generate a report, something wrong!");
+            }
+        }
+
+        /// <summary>
+        /// Retrieves a report of discounted products from postgresql database.
+        /// </summary>
+        /// <param>Name of discounted product</param>
+        /// <returns>Report with the products which was sold with specific discount and their parameters</returns>
+        [HttpGet("reports")]
+        public async Task<IActionResult> GetFullReport()
+        {
+            var reports = await _orderService.GetFullReportList();
+
+            if (reports != null)
+            {
+                return Ok(reports);
+            }
+            else
+            {
+                return BadRequest("Could not generate a report, something wrong!");
+            }
+        }
+
     }
 }

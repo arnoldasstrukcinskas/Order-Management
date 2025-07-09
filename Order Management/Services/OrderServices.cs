@@ -12,12 +12,14 @@ namespace Order_Management.Services
         private AppDbContext _context;
         private ProductServices _productServices;
         private DiscountService _discountService;
+        private OrderItemServices _orderItemServices;
 
-        public OrderServices(AppDbContext context, ProductServices productService, DiscountService discountService)
+        public OrderServices(AppDbContext context, ProductServices productService, DiscountService discountService, OrderItemServices orderItemServices)
         {
             _context = context;
             _productServices = productService;
             _discountService = discountService;
+            _orderItemServices = orderItemServices;
         }
 
         public async Task<Order> CreateOrder(OrderDTO newOrderDTO)
@@ -96,5 +98,59 @@ namespace Order_Management.Services
             _context.SaveChangesAsync();
             return Task.FromResult(foundOrder);
         }
+
+        public async Task<List<Report>> CreateReportList()
+        {
+            List<Report> listOfReports = new List<Report>();
+            var allOrderItems = await _orderItemServices.GetAllOrderItems();
+
+            foreach (var orderItem in allOrderItems)
+            {
+                Report report = new Report();
+                report.name = orderItem.Product.Name;
+                report.numberOfOrders = orderItem.Quantity;
+                report.discount = orderItem.Discount.Percentage;
+                report.totalAmount = orderItem.TotalPrice;
+                listOfReports.Add(report);
+            }
+            return listOfReports;
+        }
+
+        public async Task<List<Report>> GetFullReportList()
+        {
+            var listOfReports = await CreateReportList();
+
+            for (int i = 0; i < listOfReports.Count; i++)
+            {
+                var currentReport = listOfReports[i];
+                for (int j = i + 1; j < listOfReports.Count; j++)
+                {
+                    var nextReport = listOfReports[j];
+                    if (currentReport.name.Equals(nextReport.name) && (currentReport.discount == nextReport.discount)) {
+                    currentReport.totalAmount = currentReport.totalAmount + nextReport.totalAmount;
+
+                    listOfReports.RemoveAt(j);
+                    j--;
+                    }
+                }
+            }
+            return listOfReports;
+        }
+
+        public async Task<List<Report>> GetReportByName(string name)
+        {
+            var reports = await GetFullReportList();
+            var newList = new List<Report>();
+
+            foreach (var report in reports)
+            {
+                if((report.name.Equals(name)))
+                {
+                    newList.Add(report); 
+                }
+            }
+            return newList;
+        }
+
     }
 }
