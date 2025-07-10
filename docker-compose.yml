@@ -14,7 +14,7 @@ services:
     container_name: ordermanagement.database
     environment:
         - POSTGRES_DB=orderManagement
-        - POSTGRES_USER=arnoldas
+        - POSTGRES_USER=example
         - POSTGRES_PASSWORD=admin
     volumes:
         - ./.containers/products-db:/var/lib/postgresql/data
@@ -25,8 +25,8 @@ services:
      image: elestio/pgadmin:latest
      container_name: ordermanagement.pgadmin
      environment:
-       - PGADMIN_DEFAULT_EMAIL=arniox1234@gmail.com
-       - PGADMIN_DEFAULT_PASSWORD=arnoldas
+       - PGADMIN_DEFAULT_EMAIL=example@gmail.com
+       - PGADMIN_DEFAULT_PASSWORD=admin
      ports:
         - 5050:80
      depends_on:

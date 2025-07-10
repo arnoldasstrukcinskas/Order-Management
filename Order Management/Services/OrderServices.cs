@@ -120,20 +120,22 @@ namespace Order_Management.Services
         {
             var listOfReports = await CreateReportList();
 
-            for (int i = 0; i < listOfReports.Count; i++)
-            {
-                var currentReport = listOfReports[i];
-                for (int j = i + 1; j < listOfReports.Count; j++)
+                for (int i = 0; i < listOfReports.Count; i++)
                 {
-                    var nextReport = listOfReports[j];
-                    if (currentReport.name.Equals(nextReport.name) && (currentReport.discount == nextReport.discount)) {
-                    currentReport.totalAmount = currentReport.totalAmount + nextReport.totalAmount;
+                    var currentReport = listOfReports[i];
+                    for (int j = i + 1; j < listOfReports.Count; j++)
+                    {
+                        var nextReport = listOfReports[j];
+                        if (currentReport.name.Equals(nextReport.name) && (currentReport.discount == nextReport.discount))
+                        {
+                            currentReport.totalAmount = currentReport.totalAmount + nextReport.totalAmount;
+                            currentReport.numberOfOrders = currentReport.numberOfOrders + nextReport.numberOfOrders;
 
-                    listOfReports.RemoveAt(j);
-                    j--;
+                            listOfReports.RemoveAt(j);
+                            j--;
+                        }
                     }
                 }
-            }
             return listOfReports;
         }
 
